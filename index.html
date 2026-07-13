@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diætist Danmark — Vælg website-design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared/picker.css" />
+  <link rel="stylesheet" href="shared/mobile-base.css" />
+</head>
+<body class="dd-landing dd-has-picker">
+  <div id="dd-picker-mount"></div>
+
+  <main>
+    <section class="dd-landing-hero">
+      <h1>Vælg jeres website-design</h1>
+      <p>
+        Diætist Danmark har fire forskellige designretninger til jeres nye website.
+        Scroll ned for live previews, åbn et theme for at tilpasse farver og logo — og eksporter jeres valg,
+        når I er klar til næste fase.
+      </p>
+    </section>
+
+    <section class="dd-landing-guide" aria-labelledby="dd-guide-title">
+      <h2 id="dd-guide-title">Sådan bruger du theme pickeren</h2>
+      <ol class="dd-guide-steps">
+        <li>
+          <strong>Se previews herunder</strong> — hvert kort viser en live miniature af designet.
+          Klik <em>Åbn og tilpas</em> for fuld størrelse.
+        </li>
+        <li>
+          <strong>Brug menuen øverst</strong> — skift mellem <em>Overview</em> og <em>Theme 1–4</em>.
+          På en theme-side kan I scrolle hele siden som på et rigtigt website.
+        </li>
+        <li>
+          <strong>Klik <em>Customize</em></strong> i den grønne bjælke for at vise farver, logo og export.
+          (Klik <em>Hide options</em> for at skjule panelet igen, så preview fylder mere.)
+        </li>
+        <li>
+          <strong>Tilpas farver</strong> — hver farve har en rolle (knapper, overskrifter, baggrund osv.).
+          Klik <strong>to</strong> farver efter hinanden for at bytte deres rolle.
+          Brug <em>Light</em> / <em>Dark</em> til lys eller mørk preview.
+          <em>Original colors</em> nulstiller farverne i den valgte tilstand.
+        </li>
+        <li>
+          <strong>Vælg logo</strong> — brug pilene ◀ ▶ ved <em>Logo</em> for at gennemgå de ni logo-varianter.
+        </li>
+        <li>
+          <strong>Nulstil</strong> — <em>Reset all</em> sætter lys tilstand, standardfarver og standardlogo tilbage.
+        </li>
+      </ol>
+    </section>
+
+    <section class="dd-landing-previews" aria-labelledby="dd-previews-title">
+      <h2 id="dd-previews-title">Live previews</h2>
+      <p class="dd-previews-lead">Miniaturen opdateres med jeres farve- og logo-valg, når I har tilpasset et theme.</p>
+      <div class="dd-theme-grid" id="dd-theme-grid"></div>
+    </section>
+
+    <section class="dd-landing-export" aria-labelledby="dd-export-title">
+      <h2 id="dd-export-title">Når I er klar — send dette til mig</h2>
+      <div class="dd-export-panel">
+        <ol class="dd-export-steps">
+          <li>Åbn det theme I foretrækker (<strong>Theme 1</strong>, <strong>2</strong>, <strong>3</strong> eller <strong>4</strong>).</li>
+          <li>Tilpas farver og logo, indtil I er tilfredse.</li>
+          <li>Klik <strong>Export</strong> i customize-panelet. Der downloades <strong>to filer</strong>:
+            <ul>
+              <li><code>diaetist-danmark-brand-[theme].json</code> — jeres valg (theme, farver, logo)</li>
+              <li><code>diaetist-danmark-brand-[theme].css</code> — CSS til WordPress <em>Additional CSS</em></li>
+            </ul>
+          </li>
+          <li>Send begge filer til mig på e-mail — gerne med en kort besked om hvilket theme I har valgt og eventuelle ønsker.</li>
+        </ol>
+        <p class="dd-export-contact">
+          <strong>E-mail:</strong>
+          <a id="dd-export-email" href="mailto:kontakt@diaetist-danmark.dk">kontakt@diaetist-danmark.dk</a>
+        </p>
+        <p class="dd-export-note">
+          Logo-SVG fra mappen <code>shared/assets/logos/</code> kan også sendes med, hvis I vil have den præcise fil uploadet i WordPress.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="shared/picker.js"></script>
+  <script>
+    (async function () {
+      await DDThemePicker.initPicker({ mount: "#dd-picker-mount", themeId: null });
+
+      const brand = DDThemePicker.getBrand();
+      const grid = document.getElementById("dd-theme-grid");
+      const email = brand?.site?.contact?.email;
+      const emailLink = document.getElementById("dd-export-email");
+
+      if (email && emailLink) {
+        emailLink.href = "mailto:" + email + "?subject=Di%C3%A6tist%20Danmark%20%E2%80%94%20theme%20valg";
+        emailLink.textContent = email;
+      }
+
+      brand.themes.forEach((theme) => {
+        const card = document.createElement("article");
+        card.className = "dd-theme-card";
+        const desc = theme.descriptionDa || theme.description;
+        card.innerHTML = `
+          <div class="dd-theme-card-preview">
+            <iframe
+              src="${theme.folder}/?embed=1"
+              title="Live preview: ${theme.shortName}"
+              loading="lazy"
+              tabindex="-1"
+            ></iframe>
+          </div>
+          <div class="dd-theme-card-body">
+            <h3>${theme.shortName}: ${theme.name}</h3>
+            <p>${desc}</p>
+            <a class="dd-theme-card-cta" href="${theme.folder}/">Åbn og tilpas →</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    })();
+  </script>
+</body>
+</html>

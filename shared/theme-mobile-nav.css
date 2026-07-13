@@ -1,0 +1,365 @@
+/* Tablet breakpoint: viewport < 1300px (desktop from 1300px) */
+body.dd-has-picker .dd-theme-preview {
+  --dd-theme-header-h: 72px;
+}
+
+body.dd-has-picker .dd-theme-preview header .nav-wrapper,
+body.dd-has-picker .dd-theme-preview header .nav-container,
+body.dd-has-picker .dd-theme-preview #header .nav-wrapper {
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+body.dd-mobile-nav-open .dd-theme-preview header,
+body.dd-mobile-nav-open .dd-theme-preview #header {
+  overflow: visible;
+}
+
+body.dd-mobile-nav-open.dd-has-picker #dd-picker-mount {
+  padding-right: var(--dd-scroll-lock-pad, 0px);
+}
+
+/* Slide panels — GPU transform slide; animate without reflowing header */
+.variated-export .mobile-nav,
+.variated-export .mobile-nav-panel,
+.variated-export .nav-menu.dd-mobile-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100dvh;
+  max-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  transform: translate3d(100%, 0, 0);
+  visibility: hidden;
+  pointer-events: none;
+  margin: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  will-change: transform;
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0.45s;
+}
+
+.variated-export .mobile-nav.active,
+.variated-export .mobile-nav-panel.active,
+.variated-export .nav-menu.dd-mobile-panel.active {
+  transform: translate3d(0, 0, 0);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s;
+}
+
+body.dd-has-picker .dd-theme-preview .mobile-nav,
+body.dd-has-picker .dd-theme-preview .mobile-nav-panel,
+body.dd-has-picker .dd-theme-preview .nav-menu.dd-mobile-panel.active {
+  top: var(--dd-picker-offset) !important;
+  height: calc(100dvh - var(--dd-picker-offset)) !important;
+  max-height: calc(100dvh - var(--dd-picker-offset)) !important;
+  padding-top: calc(var(--dd-theme-header-h) + 20px);
+}
+
+body.dd-has-picker .dd-theme-preview .mobile-nav-overlay,
+body.dd-has-picker .dd-theme-preview .dd-mobile-nav-overlay {
+  top: var(--dd-picker-offset) !important;
+  height: calc(100dvh - var(--dd-picker-offset)) !important;
+}
+
+/* Dimmed backdrop — fade in/out */
+.variated-export .mobile-nav-overlay,
+.variated-export .dd-mobile-nav-overlay {
+  display: block !important;
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 38, 33, 0.45);
+  z-index: 49990;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.variated-export .mobile-nav-overlay.active,
+.variated-export .dd-mobile-nav-overlay.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Panel close (X) button */
+.variated-export .dd-mobile-nav-close,
+.variated-export .mobile-nav-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  color: inherit;
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.variated-export .dd-mobile-nav-close:hover,
+.variated-export .mobile-nav-close:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: scale(1.05);
+}
+
+.variated-export .dd-mobile-nav-close::before,
+.variated-export .dd-mobile-nav-close::after,
+.variated-export .mobile-nav-close::before,
+.variated-export .mobile-nav-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.variated-export .dd-mobile-nav-close::before,
+.variated-export .mobile-nav-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.variated-export .dd-mobile-nav-close::after,
+.variated-export .mobile-nav-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Hide lucide icon when CSS X is used */
+.variated-export .mobile-nav-close svg,
+.variated-export .mobile-nav-close i {
+  display: none;
+}
+
+/* Stagger nav links on open */
+@keyframes dd-mobile-nav-link-in {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.variated-export .mobile-nav.active > .dd-mobile-nav-close,
+.variated-export .mobile-nav-panel.active > .dd-mobile-nav-close,
+.variated-export .mobile-nav-panel.active > .mobile-nav-close {
+  animation: none;
+}
+
+.variated-export .mobile-nav.active > a,
+.variated-export .mobile-nav.active > .mobile-link,
+.variated-export .mobile-nav.active > li,
+.variated-export .mobile-nav-panel.active > ul > li,
+.variated-export .mobile-nav-panel.active > a {
+  animation: dd-mobile-nav-link-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.variated-export .mobile-nav.active > *:nth-child(2),
+.variated-export .mobile-nav-panel.active > ul > li:nth-child(1) { animation-delay: 0.05s; }
+.variated-export .mobile-nav.active > *:nth-child(3),
+.variated-export .mobile-nav-panel.active > ul > li:nth-child(2) { animation-delay: 0.1s; }
+.variated-export .mobile-nav.active > *:nth-child(4),
+.variated-export .mobile-nav-panel.active > ul > li:nth-child(3) { animation-delay: 0.15s; }
+.variated-export .mobile-nav.active > *:nth-child(5),
+.variated-export .mobile-nav-panel.active > ul > li:nth-child(4) { animation-delay: 0.2s; }
+.variated-export .mobile-nav.active > *:nth-child(6),
+.variated-export .mobile-nav-panel.active > ul > li:nth-child(5) { animation-delay: 0.25s; }
+.variated-export .mobile-nav.active > *:nth-child(7),
+.variated-export .mobile-nav-panel.active > ul > li:nth-child(6) { animation-delay: 0.3s; }
+.variated-export .mobile-nav.active > *:nth-child(8),
+.variated-export .mobile-nav-panel.active > ul > li:nth-child(7) { animation-delay: 0.35s; }
+.variated-export .mobile-nav.active > *:nth-child(9),
+.variated-export .mobile-nav-panel.active > ul > li:nth-child(8) { animation-delay: 0.4s; }
+
+.variated-export .menu-toggle,
+.variated-export #menuToggle,
+.variated-export .mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.variated-export .menu-toggle span,
+.variated-export #menuToggle span,
+.variated-export .mobile-menu-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: currentColor;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.variated-export .menu-toggle.active,
+.variated-export #menuToggle.active,
+.variated-export .mobile-menu-btn.active {
+  justify-content: center !important;
+  gap: 0 !important;
+}
+
+.variated-export .menu-toggle.active span:nth-child(1),
+.variated-export #menuToggle.active span:nth-child(1),
+.variated-export .mobile-menu-btn.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg) !important;
+}
+
+.variated-export .menu-toggle.active span:nth-child(2),
+.variated-export #menuToggle.active span:nth-child(2),
+.variated-export .mobile-menu-btn.active span:nth-child(2) {
+  opacity: 0 !important;
+}
+
+.variated-export .menu-toggle.active span:nth-child(3),
+.variated-export #menuToggle.active span:nth-child(3),
+.variated-export .mobile-menu-btn.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg) !important;
+}
+
+.variated-export--di-tist-danmark-autoriseret-klinisk-di-tistvejledning .menu-toggle {
+  color: var(--warm-brown, #64412f);
+}
+
+.variated-export--di-tist-danmark-portal-for-autoriseret-klinisk-di-tbehandling .menu-toggle {
+  color: var(--deep-brown, #4a3426);
+}
+
+.variated-export--di-tist-danmark-certificerede-kliniske-di-tister #menuToggle {
+  color: var(--primary, #2d4a43);
+}
+
+.variated-export--di-tist-danmark-autorisede-kliniske-di-tister .mobile-menu-btn {
+  color: var(--forest-primary, #1b3227);
+}
+
+.variated-export--di-tist-danmark-autoriseret-klinisk-di-tistvejledning .dd-mobile-nav-close {
+  color: var(--warm-brown, #64412f);
+}
+
+.variated-export--di-tist-danmark-portal-for-autoriseret-klinisk-di-tbehandling .dd-mobile-nav-close {
+  color: var(--deep-brown, #4a3426);
+}
+
+.variated-export--di-tist-danmark-certificerede-kliniske-di-tister .dd-mobile-nav-close {
+  color: var(--primary, #2d4a43);
+}
+
+.variated-export--di-tist-danmark-autorisede-kliniske-di-tister .dd-mobile-nav-close,
+.variated-export--di-tist-danmark-autorisede-kliniske-di-tister .mobile-nav-close {
+  color: var(--forest-primary, #1b3227);
+}
+
+/* Tablet and below: hamburger nav (avoid cramped desktop links in header) */
+@media (max-width: 1299px) {
+  .variated-export header nav,
+  .variated-export header .nav-links,
+  .variated-export header .nav-menu,
+  .variated-export #header nav {
+    display: none !important;
+  }
+
+  .variated-export header .nav-cta {
+    display: none !important;
+  }
+
+  .variated-export .menu-toggle,
+  .variated-export #menuToggle {
+    display: flex !important;
+  }
+
+  .variated-export .mobile-menu-btn {
+    display: flex !important;
+  }
+
+  .variated-export header .nav-wrapper,
+  .variated-export header .nav-container,
+  .variated-export #header .nav-wrapper {
+    flex-wrap: nowrap;
+    min-height: var(--dd-theme-header-h, 72px);
+    height: var(--dd-theme-header-h, 72px);
+    gap: 12px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .variated-export .menu-toggle,
+  .variated-export #menuToggle,
+  .variated-export .mobile-menu-btn {
+    display: none !important;
+  }
+
+  .variated-export header .nav-menu li,
+  .variated-export header .nav-links a,
+  .variated-export header .nav-link {
+    overflow-wrap: normal;
+    word-break: normal;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 1299px) {
+  body.dd-has-picker .dd-theme-preview header .nav-wrapper,
+  body.dd-has-picker .dd-theme-preview header .nav-container,
+  body.dd-has-picker .dd-theme-preview #header .nav-wrapper {
+    min-height: var(--dd-theme-header-h);
+    height: var(--dd-theme-header-h);
+  }
+}
+
+@media (max-width: 768px) {
+  body.dd-has-picker .dd-theme-preview {
+    --dd-theme-header-h: 72px;
+  }
+}
+
+/* Theme-specific slide timing */
+.variated-export--di-tist-danmark-portal-for-autoriseret-klinisk-di-tbehandling .mobile-nav {
+  transition:
+    transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+    visibility 0s linear 0.45s;
+}
+
+.variated-export--di-tist-danmark-portal-for-autoriseret-klinisk-di-tbehandling .mobile-nav.active {
+  transition:
+    transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+    visibility 0s;
+}
+
+.variated-export--di-tist-danmark-autorisede-kliniske-di-tister .mobile-nav-panel {
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0.5s;
+}
+
+.variated-export--di-tist-danmark-autorisede-kliniske-di-tister .mobile-nav-panel.active {
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s;
+}

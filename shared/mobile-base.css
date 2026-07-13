@@ -1,0 +1,166 @@
+/* Cross-theme mobile & text-wrapping base (all variated exports) */
+html:has(body.dd-has-picker) {
+  overflow-x: clip;
+}
+
+body.dd-has-picker {
+  overflow-x: clip;
+}
+
+body.dd-has-picker .dd-theme-preview {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.variated-export {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.variated-export img.dd-brand-logo {
+  max-width: none;
+  height: auto;
+}
+
+.variated-export img:not(.dd-brand-logo):not(.dietitian-avatar),
+.variated-export video,
+.variated-export iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+.variated-export svg.logo-symbol {
+  flex-shrink: 0;
+}
+
+.variated-export h1,
+.variated-export h2,
+.variated-export h3,
+.variated-export h4,
+.variated-export p,
+.variated-export li,
+.variated-export label {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.variated-export table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.variated-export header .logo-container,
+.variated-export header a.logo,
+.variated-export .footer-logo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+  text-decoration: none;
+}
+
+.variated-export img.dd-brand-logo {
+  flex-shrink: 0;
+  height: clamp(36px, 8vw, 48px);
+  width: auto;
+  max-width: min(240px, 52vw);
+  object-fit: contain;
+  display: block;
+}
+
+.variated-export footer img.dd-brand-logo {
+  height: clamp(32px, 7vw, 40px);
+  max-width: min(200px, 48vw);
+}
+
+.variated-export [class*="grid"] > *,
+.variated-export [class*="-card"],
+.variated-export [class*="-panel"] {
+  min-width: 0;
+}
+
+@media (max-width: 1299px) {
+  .variated-export header .nav-wrapper,
+  .variated-export header .nav-container,
+  .variated-export #header .nav-wrapper {
+    flex-wrap: nowrap;
+  }
+}
+
+@media (max-width: 767px) {
+  .variated-export header .logo-text {
+    min-width: 0;
+    line-height: 1.2;
+  }
+
+  .variated-export header img.dd-brand-logo {
+    max-width: min(200px, 58vw);
+    height: clamp(32px, 9vw, 44px);
+  }
+
+  .variated-export .hero-grid,
+  .variated-export .hero-section {
+    grid-template-columns: 1fr !important;
+    gap: clamp(1.5rem, 5vw, 2.5rem);
+  }
+
+  .variated-export .hero-finder {
+    grid-template-columns: 1fr !important;
+  }
+
+  .variated-export .hero-finder .btn {
+    width: 100%;
+  }
+
+  .variated-export .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .variated-export .hero-actions .btn,
+  .variated-export .hero-actions a.btn {
+    width: 100%;
+  }
+
+  .variated-export .btn,
+  .variated-export .btn-primary,
+  .variated-export .btn-secondary,
+  .variated-export .nav-cta {
+    white-space: normal;
+    text-align: center;
+    min-height: 48px;
+  }
+
+  .variated-export .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .variated-export .footer-bottom-links {
+    justify-content: center;
+    gap: 12px 20px;
+  }
+
+  .variated-export .finder-layout,
+  .variated-export .locator-grid,
+  .variated-export .booking-grid,
+  .variated-export .find-layout,
+  .variated-export .map-grid,
+  .variated-export .subsidy-grid,
+  .variated-export .subsidies-grid,
+  .variated-export .foredrag-grid,
+  .variated-export .knowledge-grid,
+  .variated-export .consulting-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .variated-export .specialties-grid,
+  .variated-export .stats-grid,
+  .variated-export .region-legend {
+    grid-template-columns: 1fr !important;
+  }
+}

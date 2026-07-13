@@ -1,0 +1,211 @@
+{
+  "site": {
+    "name": "Diætist Danmark",
+    "tagline": "Autoriserede kliniske diætister — videnskabelig kostvejledning",
+    "contact": {
+      "email": "kontakt@diaetist-danmark.dk",
+      "phone": "+45 70 20 40 60",
+      "address": "Toldbodgade 12, 1253 København K"
+    }
+  },
+  "paletteSlots": [
+    {
+      "id": "primary",
+      "label": "Primary blue",
+      "shortLabel": "Blue",
+      "description": "Buttons, links & CTAs",
+      "default": "#3393C0"
+    },
+    {
+      "id": "brown",
+      "label": "Warm brown",
+      "shortLabel": "Brown",
+      "description": "Headings & brand accents",
+      "default": "#64412F"
+    },
+    {
+      "id": "sand",
+      "label": "Sand",
+      "shortLabel": "Sand",
+      "description": "Borders, cards & highlights",
+      "default": "#D4B896"
+    },
+    {
+      "id": "green",
+      "label": "Dusty green",
+      "shortLabel": "Green",
+      "description": "Badges, icons & secondary accents",
+      "default": "#7A9E7E"
+    },
+    {
+      "id": "background",
+      "label": "Background",
+      "shortLabel": "BG",
+      "description": "Page & section surfaces",
+      "default": "#F5F1EB"
+    },
+    {
+      "id": "text",
+      "label": "Body text",
+      "shortLabel": "Text",
+      "description": "Paragraphs & UI copy",
+      "default": "#3D3D3D"
+    }
+  ],
+  "appearancePresets": {
+    "light": {
+      "primary": "#3393C0",
+      "brown": "#64412F",
+      "sand": "#D4B896",
+      "green": "#7A9E7E",
+      "background": "#F5F1EB",
+      "text": "#3D3D3D"
+    },
+    "dark": {
+      "primary": "#5CB8E4",
+      "brown": "#D4B896",
+      "sand": "#8A6B52",
+      "green": "#9BB89F",
+      "background": "#1A2621",
+      "text": "#F5F1EB"
+    }
+  },
+  "logos": [
+    { "id": "3D3D3D", "file": "logo-3D3D3D.svg", "label": "Dark text", "tint": "#3D3D3D", "source": "logo [3D3D3D].svg" },
+    { "id": "7A9E7E", "file": "logo-7A9E7E.svg", "label": "Dusty green", "tint": "#7A9E7E", "source": "logo [7A9E7E].svg" },
+    { "id": "3393C0", "file": "logo-3393C0.svg", "label": "Primary blue", "tint": "#3393C0", "source": "logo [3393C0].svg" },
+    { "id": "64412", "file": "logo-64412.svg", "label": "Warm brown", "tint": "#64412F", "source": "logo [64412].svg" },
+    { "id": "D4B896", "file": "logo-D4B896.svg", "label": "Light sand", "tint": "#D4B896", "source": "logo [D4B896].svg" },
+    { "id": "F5F1EB", "file": "logo-F5F1EB.svg", "label": "Light neutral", "tint": "#F5F1EB", "source": "logo [F5F1EB].svg" },
+    { "id": "black", "file": "LOGO-black.svg", "label": "Black", "tint": "#000000", "source": "LOGO-black.svg" },
+    { "id": "red", "file": "LOGO-red.svg", "label": "Red", "tint": "#C0392B", "source": "LOGO-red.svg" },
+    { "id": "white", "file": "LOGO-white.svg", "label": "White", "tint": "#FFFFFF", "source": "LOGO-white.svg" }
+  ],
+  "themes": [
+    {
+      "id": "1st",
+      "folder": "1st",
+      "name": "Autoriseret Klinisk Diætistvejledning",
+      "shortName": "Theme 1",
+      "description": "Classic editorial layout with map locator, GSAP motion, and Cormorant Garamond headings.",
+      "descriptionDa": "Klassisk redaktionelt layout med kort-finder, GSAP-animationer og Cormorant Garamond-overskrifter.",
+      "wordpressTemplate": "Diætist Danmark | Autoriseret Klinisk Diætistvejledning"
+    },
+    {
+      "id": "2nd",
+      "folder": "2nd",
+      "name": "Portal for Autoriseret Klinisk Diætbehandling",
+      "shortName": "Theme 2",
+      "description": "Portal-style navigation with DM Serif Display and structured service pillars.",
+      "descriptionDa": "Portal-inspireret navigation med DM Serif Display og tydelige behandlingsområder.",
+      "wordpressTemplate": "Diætist Danmark — Portal for Autoriseret Klinisk Diætbehandling"
+    },
+    {
+      "id": "3rd",
+      "folder": "3rd",
+      "name": "Certificerede Kliniske Diætister",
+      "shortName": "Theme 3",
+      "description": "Sage-green editorial aesthetic with Playfair Display and tactile paper surfaces.",
+      "descriptionDa": "Sagegrøn redaktionel stil med Playfair Display og taktilt papirudtryk.",
+      "wordpressTemplate": "Diætist Danmark — Certificerede Kliniske Diætister"
+    },
+    {
+      "id": "4th",
+      "folder": "4th",
+      "name": "Autorisede kliniske diætister",
+      "shortName": "Theme 4",
+      "description": "Premium forest palette with Fraunces typography and Lucide iconography.",
+      "descriptionDa": "Premium skovgrøn palette med Fraunces-typografi og Lucide-ikoner.",
+      "wordpressTemplate": "Diætist Danmark | Autorisede kliniske diætister"
+    }
+  ],
+  "themeVariableMaps": {
+    "1st": {
+      "--primary-blue": "primary",
+      "--primary-blue-dark": "primaryDark",
+      "--warm-brown": "brown",
+      "--light-brown": "sand",
+      "--dusty-green": "green",
+      "--dusty-green-light": "greenLight",
+      "--light-neutral": "background",
+      "--dark-text": "text"
+    },
+    "2nd": {
+      "--base-canvas": "background",
+      "--text-main": "text",
+      "--border-line": "brown",
+      "--accent-green": "green",
+      "--interactive-blue": "primary",
+      "--interactive-sand": "sand"
+    },
+    "3rd": {
+      "--bg-paper": "background",
+      "--bg-card": "background",
+      "--primary": "green",
+      "--primary-light": "greenLight",
+      "--accent": "brown",
+      "--accent-soft": "sand",
+      "--text-dark": "text",
+      "--text-muted": "text"
+    },
+    "4th": {
+      "--bg-paper": "background",
+      "--bg-paper-dark": "background",
+      "--forest-primary": "green",
+      "--forest-light": "green",
+      "--sage-medium": "sand",
+      "--sage-light": "greenLight",
+      "--sage-ultra-light": "greenLight",
+      "--accent-warm": "brown",
+      "--accent-warm-light": "sand",
+      "--text-dark": "text",
+      "--text-muted": "text"
+    }
+  },
+  "themeDependencies": {
+    "1st": {
+      "css": [
+        "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap",
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css",
+        "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      ],
+      "js": [
+        "https://unpkg.com/lenis@1.3.21/dist/lenis.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js",
+        "https://cdn.jsdelivr.net/npm/chart.js",
+        "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+        "https://unpkg.com/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"
+      ]
+    },
+    "2nd": {
+      "css": [
+        "https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap",
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      ],
+      "js": [
+        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+      ]
+    },
+    "3rd": {
+      "css": [
+        "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap",
+        "https://unpkg.com/aos@2.3.4/dist/aos.css"
+      ],
+      "js": [
+        "https://unpkg.com/aos@2.3.4/dist/aos.js",
+        "https://unpkg.com/lenis@1.3.21/dist/lenis.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
+      ]
+    },
+    "4th": {
+      "css": [
+        "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      ],
+      "js": [
+        "https://unpkg.com/lucide@latest"
+      ]
+    }
+  }
+}

@@ -1,0 +1,64 @@
+/* Diætist Danmark — unified WordPress brand tokens
+ * Paste into Appearance → Customize → Additional CSS
+ * Values are overridden at runtime by the theme picker export. */
+
+:root {
+  --dd-primary: #3393C0;
+  --dd-primary-dark: #256E91;
+  --dd-brown: #64412F;
+  --dd-sand: #D4B896;
+  --dd-green: #7A9E7E;
+  --dd-green-light: #EBF2EC;
+  --dd-background: #F5F1EB;
+  --dd-text: #3D3D3D;
+  --dd-white: #FFFFFF;
+}
+
+/* Example bridge for Theme 1 (Autoriseret Klinisk Diætistvejledning) */
+.variated-export--di-tist-danmark-autoriseret-klinisk-di-tistvejledning {
+  --primary-blue: var(--dd-primary);
+  --primary-blue-dark: var(--dd-primary-dark);
+  --warm-brown: var(--dd-brown);
+  --light-brown: var(--dd-sand);
+  --dusty-green: var(--dd-green);
+  --dusty-green-light: var(--dd-green-light);
+  --light-neutral: var(--dd-background);
+  --dark-text: var(--dd-text);
+}
+
+/* Example bridge for Theme 2 */
+.variated-export--di-tist-danmark-portal-for-autoriseret-klinisk-di-tbehandling {
+  --base-canvas: var(--dd-background);
+  --text-main: var(--dd-text);
+  --border-line: var(--dd-brown);
+  --accent-green: var(--dd-green);
+  --interactive-blue: var(--dd-primary);
+  --interactive-sand: var(--dd-sand);
+}
+
+/* Example bridge for Theme 3 */
+.variated-export--di-tist-danmark-certificerede-kliniske-di-tister {
+  --bg-paper: var(--dd-background);
+  --primary: var(--dd-green);
+  --primary-light: var(--dd-green-light);
+  --accent: var(--dd-brown);
+  --accent-soft: var(--dd-sand);
+  --text-dark: var(--dd-text);
+}
+
+/* Example bridge for Theme 4 */
+.variated-export--di-tist-danmark-autorisede-kliniske-di-tister {
+  --bg-paper: var(--dd-background);
+  --forest-primary: var(--dd-green);
+  --sage-medium: var(--dd-sand);
+  --sage-light: var(--dd-green-light);
+  --accent-warm: var(--dd-brown);
+  --text-dark: var(--dd-text);
+}
+
+.dd-brand-logo {
+  height: 44px;
+  width: auto;
+  max-width: min(220px, 100%);
+  object-fit: contain;
+}

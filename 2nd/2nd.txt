@@ -1,0 +1,1663 @@
+You are a senior frontend engineer. The blocks below are a UI design produced by Variated AI Designer: an HTML fragment, CSS, optional client-side JavaScript, and a machine-readable dependency list.
+
+**Context:** greenfield work. Scaffold or align with a **new** project using **Vite** as the default toolchain (use `npm create vite@latest` with vanilla + TypeScript unless the user's notes specify another Vite template).
+
+**Your job**
+- Wire `index.html`, global/module CSS, and entry script(s) so the result closely matches the design intent in a dev preview.
+- Map the HTML fragment into real pages/components; keep semantics and structure faithful.
+- Install or reference libraries from the JSON dependency block via npm and `import`, or CDN in `index.html` if that matches the stack — stay consistent.
+- Preserve accessibility (landmarks, labels, focus, contrast) implied by the markup and styles.
+
+**Avoid:** discarding layout, motion, or content hierarchy without reason. If the HTML references `/user-assets/...` paths, replace with placeholders or the user's real asset pipeline.
+
+## Design metadata & dependencies
+
+```json
+{
+  "componentName": "Diætist Danmark — Portal for Autoriseret Klinisk Diætbehandling",
+  "template": "freeform",
+  "dependencies": {
+    "css": [
+      "https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap",
+      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    ],
+    "js": [
+      "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+    ]
+  }
+}
+```
+
+## HTML
+
+```html
+<!-- HEADER -->
+  <header data-block-id="block-01-header">
+    <div class="container nav-container">
+      <a href="#" class="logo">
+        <svg class="logo-symbol" viewBox="0 0 24 24">
+          <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"></path>
+        </svg>
+        <span>Diætist Danmark</span>
+      </a>
+      <nav class="nav-links" data-block-id="block-02-nav">
+        <a href="#specialiteter" class="nav-link">Specialer</a>
+        <a href="#find-diaetist" class="nav-link">Find Diætist</a>
+        <a href="#tilskud" class="nav-link">Tilskud</a>
+        <a href="#foredrag" class="nav-link">Foredrag &amp; Erhverv</a>
+        <a href="#viden" class="nav-link">Viden</a>
+        <a href="#find-diaetist" class="btn btn-secondary">Find behandler</a>
+      </nav>
+    </div>
+  </header>
+
+  <main data-block-id="block-03-main">
+    
+    <!-- HERO SECTION -->
+    <section class="container hero-section" data-block-id="block-04-section">
+      <div class="hero-content">
+        <div class="hero-tagline">Autoriserede kliniske diætister</div>
+        <h1 class="hero-title">Videnskabeligt funderet ernæring. Formidlet med nærvær.</h1>
+        <p class="hero-description">
+          Vi forbinder private, virksomheder og organisationer med landets førende sundhedsfaglige eksperter. Ingen quick-fixes — kun evidensbaseret vejledning skræddersyet til dit liv og dit helbred.
+        </p>
+        
+        <!-- Quick Finder Widget -->
+        <div class="hero-finder">
+          <div class="finder-field">
+            <label for="hero-region">Region</label>
+            <select id="hero-region">
+              <option value="alle">Hele Danmark</option>
+              <option value="hovedstaden">Hovedstaden</option>
+              <option value="sjaelland">Sjælland</option>
+              <option value="syddanmark">Syddanmark</option>
+              <option value="midtjylland">Midtjylland</option>
+              <option value="nordjylland">Nordjylland</option>
+            </select>
+          </div>
+          <div class="finder-field">
+            <label for="hero-specialty">Speciale</label>
+            <select id="hero-specialty">
+              <option value="alle">Alle specialer</option>
+              <option value="gastro">Gastrointestinale lidelser</option>
+              <option value="kardio">Kardiovaskulær sundhed</option>
+              <option value="diabetes">Diabetes &amp; Endokrinologi</option>
+              <option value="spiseforstyrrelse">Spiseforstyrrelser</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" id="hero-search-btn" style="align-self: flex-end; height: 44px;">
+            Søg nu <i class="fa-solid fa-arrow-right" style="margin-left: 0.5rem;"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Side Editorial Card -->
+      <div class="hero-graphic">
+        <div class="clinical-seal">AUTORISERET<br>AF SUNDHEDS-<br>STYRELSEN</div>
+        <div class="metric-block">
+          <div class="metric-value" id="count-members">240+</div>
+          <div class="metric-label">Aktive kliniske diætister fordelt over hele landet</div>
+        </div>
+        <div class="metric-block" style="border-top: 1px solid var(--border-line); padding-top: 1.5rem;">
+          <div class="metric-value" id="count-consultations">15k+</div>
+          <div class="metric-label">Årlige sundhedsfaglige konsultationer</div>
+        </div>
+        <p style="font-size: 0.9rem; opacity: 0.8; font-style: italic;">
+          "Vores mission er at sikre, at alle danskere har adgang til kvalificeret og videnskabelig ernæringsrådgivning."
+        </p>
+      </div>
+    </section>
+
+    <!-- MODULAR SPECIALTIES (10 categories) -->
+    <section id="specialiteter" class="container" style="padding: 6rem 0 3rem;" data-block-id="block-05-section">
+      <div class="section-header">
+        <span class="section-subtitle">Kliniske kernekompetencer</span>
+        <h2 class="section-title">Hvad kan en klinisk diætist hjælpe med?</h2>
+        <p style="max-width: 600px; text-align: center; margin-top: 0.5rem;">
+          Vores medlemmer er autoriserede sundhedspersoner med en professionsbachelor i ernæring og sundhed. De er uddannet til at yde diætbehandling ved sygdom og forebyggelse.
+        </p>
+      </div>
+
+      <div class="specialties-grid">
+        <!-- Card 1 -->
+        <div class="specialty-card" data-specialty="gastro">
+          <svg class="specialty-icon" viewBox="0 0 24 24">
+            <path d="M12,2C11.5,2 10.1,4.4 9.5,6C8.8,7.6 8.5,9.5 8.5,11C8.5,14 10.1,15.5 12,15.5C13.9,15.5 15.5,14 15.5,11C15.5,9.5 15.2,7.6 14.5,6C13.9,4.4 12.5,2 12,2Z"></path>
+            <path d="M12,15.5C9.5,15.5 7.5,17.5 7.5,20C7.5,21.1 8.4,22 9.5,22C10.6,22 11.5,21.1 11.5,20C11.5,19.4 12,19 12.5,19C13,19 13.5,19.4 13.5,20C13.5,21.1 14.4,22 15.5,22C16.6,22 17.5,21.1 17.5,20C17.5,17.5 15.5,15.5 12,15.5Z"></path>
+          </svg>
+          <h3 class="specialty-title">Gastrointestinale lidelser</h3>
+          <p class="specialty-desc">Behandling og lindring af IBS (Irritabel tyktarm), colitis ulcerosa, Crohns sygdom og cøliaki.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="specialty-card" data-specialty="kardio">
+          <svg class="specialty-icon" viewBox="0 0 24 24">
+            <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"></path>
+          </svg>
+          <h3 class="specialty-title">Kardiovaskulær sundhed</h3>
+          <p class="specialty-desc">Koststrategier til sænkning af kolesterol, regulering af blodtryk samt forebyggelse af hjerte-kar-sygdomme.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="specialty-card" data-specialty="diabetes">
+          <svg class="specialty-icon" viewBox="0 0 24 24">
+            <path d="M19,3H5C3.89,3 3,3.9 3,5V19C3,20.1 3.89,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3M16,10.5H13.5V13H16V14.5H13.5V17H12V14.5H9.5V13H12V10.5H9.5V9H12V6.5H13.5V9H16V10.5Z"></path>
+          </svg>
+          <h3 class="specialty-title">Diabetes &amp; Endokrinologi</h3>
+          <p class="specialty-desc">Regulering af blodsukker ved Type 1 og Type 2 diabetes, samt hormonelle ubalancer som PCOS.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="specialty-card">
+          <svg class="specialty-icon" viewBox="0 0 24 24">
+            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"></path>
+          </svg>
+          <h3 class="specialty-title">Børn &amp; Unge</h3>
+          <p class="specialty-desc">Sikring af optimal vækst, håndtering af fødevareallergier og selektiv spiseadfærd hos børn.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="specialty-card">
+          <svg class="specialty-icon" viewBox="0 0 24 24">
+            <path d="M12,3C7.03,3 3,7.03 3,12C3,16.97 7.03,21 12,21C16.97,21 21,16.97 21,12C21,7.03 16.97,3 12,3M12,18C8.69,18 6,15.31 6,12C6,8.69 8.69,6 12,6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18Z"></path>
+          </svg>
+          <h3 class="specialty-title">Ældre &amp; Geriatri</h3>
+          <p class="specialty-desc">Ernæringsindsatser mod uplanlagt vægttab, dysfagi (synkebesvær) og genopbygning af muskelmasse.</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="specialty-card">
+          <svg class="specialty-icon" viewBox="0 0 24 24">
+            <path d="M12,2C11.5,2 10.1,4.4 9.5,6C8.8,7.6 8.5,9.5 8.5,11C8.5,14 10.1,15.5 12,15.5C13.9,15.5 15.5,14 15.5,11C15.5,9.5 15.2,7.6 14.5,6C13.9,4.4 12.5,2 12,2Z"></path>
+          </svg>
+          <h3 class="specialty-title">Sportsernæring</h3>
+          <p class="specialty-desc">Optimering af energiindtag, væskebalance og restitution for både eliteudøvere og motionister.</p>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="specialty-card">
+          <svg class="specialty-icon" viewBox="0 0 24 24">
+            <path d="M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A9,9 0 0,0 21,12A9,9 0 0,0 12,3M12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19A7,7 0 0,1 5,12A7,7 0 0,1 12,5Z"></path>
+          </svg>
+          <h3 class="specialty-title">Onkologisk støtte</h3>
+          <p class="specialty-desc">Ernæring under og efter kræftforløb for at opretholde styrke, vægt og lindre bivirkninger ved behandling.</p>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="specialty-card" data-specialty="spiseforstyrrelse">
+          <svg class="specialty-icon" viewBox="0 0 24 24">
+            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z"></path>
+          </svg>
+          <h3 class="specialty-title">Spiseforstyrrelser</h3>
+          <p class="specialty-desc">Sensitiv og tværfaglig behandling af anoreksi, bulimi, BED (tvangsoverspisning) og ortoreksi.</p>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="specialty-card">
+          <svg class="specialty-icon" viewBox="0 0 24 24">
+            <path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2ZM12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20Z"></path>
+          </svg>
+          <h3 class="specialty-title">Allergier &amp; Intolerance</h3>
+          <p class="specialty-desc">Sikker diagnosticering og navigering i en hverdag med laktoseintolerance, cøliaki eller histaminfølsomhed.</p>
+        </div>
+
+        <!-- Card 10 -->
+        <div class="specialty-card">
+          <svg class="specialty-icon" viewBox="0 0 24 24">
+            <path d="M12,2C11.5,2 10.1,4.4 9.5,6C8.8,7.6 8.5,9.5 8.5,11C8.5,14 10.1,15.5 12,15.5C13.9,15.5 15.5,14 15.5,11C15.5,9.5 15.2,7.6 14.5,6C13.9,4.4 12.5,2 12,2Z"></path>
+          </svg>
+          <h3 class="specialty-title">Fertilitet &amp; Graviditet</h3>
+          <p class="specialty-desc">Ernæringsoptimering før undfangelse, under graviditet og efter fødslen for mor og barn.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE FINDER (Map + Realtime list search) -->
+    <section id="find-diaetist" class="finder-section" data-block-id="block-06-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Landsdækkende netværk</span>
+          <h2 class="section-title">Find en autoriseret diætist nær dig</h2>
+          <p style="max-width: 650px; text-align: center;">
+            Klik direkte på kortet for at filtrere efter din region, eller vælg et speciale for at indsnævre din søgning øjeblikkeligt.
+          </p>
+        </div>
+
+        <div class="finder-layout">
+          <!-- Left: Interactive Denmark Map -->
+          <div class="map-container">
+            <!-- Inline SVG Denmark Map with high responsive visual targets -->
+            <svg class="denmark-map" viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg">
+              <!-- Nordjylland -->
+              <path class="map-region" id="region-nordjylland" data-region="nordjylland" d="M 180,20 L 250,15 L 340,50 L 320,110 L 280,120 L 230,140 L 190,130 L 170,90 Z"></path>
+              <!-- Midtjylland -->
+              <path class="map-region" id="region-midtjylland" data-region="midtjylland" d="M 170,140 L 230,140 L 280,125 L 330,115 L 350,160 L 320,240 L 160,250 L 130,190 Z"></path>
+              <!-- Syddanmark -->
+              <path class="map-region" id="region-syddanmark" data-region="syddanmark" d="M 160,250 L 320,240 L 300,320 L 260,370 L 160,370 L 140,310 Z"></path>
+              <!-- Sjælland -->
+              <path class="map-region" id="region-sjaelland" data-region="sjaelland" d="M 400,220 L 480,220 L 490,290 L 410,340 L 360,300 L 370,250 Z"></path>
+              <!-- Hovedstaden -->
+              <path class="map-region" id="region-hovedstaden" data-region="hovedstaden" d="M 480,220 L 530,180 L 550,220 L 510,260 Z"></path>
+            </svg>
+
+            <!-- Quick Region Selector Buttons -->
+            <div class="region-legend">
+              <button class="region-btn active" data-region="alle">Hele landet</button>
+              <button class="region-btn" data-region="hovedstaden">Hovedstaden</button>
+              <button class="region-btn" data-region="sjaelland">Sjælland</button>
+              <button class="region-btn" data-region="syddanmark">Syddanmark</button>
+              <button class="region-btn" data-region="midtjylland">Midtjylland</button>
+              <button class="region-btn" data-region="nordjylland">Nordjylland</button>
+            </div>
+          </div>
+
+          <!-- Right: Interactive results list -->
+          <div class="results-container">
+            <div class="results-header">
+              <h3 class="results-title">Behandlere i <span id="current-region-text">Hele landet</span></h3>
+              <span class="results-count" id="results-count-badge">5 fundet</span>
+            </div>
+
+            <!-- Dietitian List -->
+            <div class="dietitian-list" id="dietitian-list">
+              <!-- Item 1 -->
+              <div class="dietitian-card" data-regions="hovedstaden" data-specs="gastro diabetes">
+                <img src="https://picsum.photos/seed/doc1/120/120" alt="Mette Poulsen" class="dietitian-avatar">
+                <div class="dietitian-info">
+                  <h4 style="font-size: 1.2rem; color: var(--border-line);">Mette Poulsen</h4>
+                  <p style="font-size: 0.85rem; font-weight: 600; opacity: 0.8;">København Ø &amp; Online</p>
+                  <p style="font-size: 0.85rem; line-height: 1.4;">Specialist i irritabel tyktarm (IBS), low FODMAP diæt samt type 2 diabetes.</p>
+                  <div class="dietitian-meta">
+                    <span class="tag">Hovedstaden</span>
+                    <span class="tag tag-blue">Gastro</span>
+                    <span class="tag tag-blue">Diabetes</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="dietitian-card" data-regions="midtjylland" data-specs="kardio diabetes">
+                <img src="https://picsum.photos/seed/doc2/120/120" alt="Henrik Nielsen" class="dietitian-avatar">
+                <div class="dietitian-info">
+                  <h4 style="font-size: 1.2rem; color: var(--border-line);">Henrik Nielsen</h4>
+                  <p style="font-size: 0.85rem; font-weight: 600; opacity: 0.8;">Aarhus C</p>
+                  <p style="font-size: 0.85rem; line-height: 1.4;">Fokus på forebyggelse af hjerte-kar-sygdomme og optimering af kolesteroltal.</p>
+                  <div class="dietitian-meta">
+                    <span class="tag">Midtjylland</span>
+                    <span class="tag tag-blue">Kardio</span>
+                    <span class="tag tag-blue">Diabetes</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="dietitian-card" data-regions="syddanmark" data-specs="spiseforstyrrelse">
+                <img src="https://picsum.photos/seed/doc3/120/120" alt="Signe Kragh" class="dietitian-avatar">
+                <div class="dietitian-info">
+                  <h4 style="font-size: 1.2rem; color: var(--border-line);">Signe Kragh</h4>
+                  <p style="font-size: 0.85rem; font-weight: 600; opacity: 0.8;">Odense M &amp; Svendborg</p>
+                  <p style="font-size: 0.85rem; line-height: 1.4;">Mangeårig erfaring med behandling af spiseforstyrrelser og overspisning (BED).</p>
+                  <div class="dietitian-meta">
+                    <span class="tag">Syddanmark</span>
+                    <span class="tag tag-blue">Spiseforstyrrelse</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 4 -->
+              <div class="dietitian-card" data-regions="nordjylland" data-specs="gastro">
+                <img src="https://picsum.photos/seed/doc4/120/120" alt="Anette Schmidt" class="dietitian-avatar">
+                <div class="dietitian-info">
+                  <h4 style="font-size: 1.2rem; color: var(--border-line);">Anette Schmidt</h4>
+                  <p style="font-size: 0.85rem; font-weight: 600; opacity: 0.8;">Aalborg</p>
+                  <p style="font-size: 0.85rem; line-height: 1.4;">Individuelle forløb til mave-tarm-udfordringer samt inflammatoriske tarmsygdomme.</p>
+                  <div class="dietitian-meta">
+                    <span class="tag">Nordjylland</span>
+                    <span class="tag tag-blue">Gastro</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 5 -->
+              <div class="dietitian-card" data-regions="sjaelland" data-specs="diabetes kardio">
+                <img src="https://picsum.photos/seed/doc5/120/120" alt="Christian Lind" class="dietitian-avatar">
+                <div class="dietitian-info">
+                  <h4 style="font-size: 1.2rem; color: var(--border-line);">Christian Lind</h4>
+                  <p style="font-size: 0.85rem; font-weight: 600; opacity: 0.8;">Roskilde</p>
+                  <p style="font-size: 0.85rem; line-height: 1.4;">Klinisk diætbehandling med vægt på livsstilsændringer ved metaboliske udfordringer.</p>
+                  <div class="dietitian-meta">
+                    <span class="tag">Sjælland</span>
+                    <span class="tag tag-blue">Diabetes</span>
+                    <span class="tag tag-blue">Kardio</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Search Actions -->
+            <div style="border-top: 1px solid var(--border-line); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.85rem; opacity: 0.7;">Alle behandlere er statsautoriserede.</span>
+              <a href="#" class="btn btn-primary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Book direkte</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUBSIDIES (TILSKUD) SECTION -->
+    <section id="tilskud" class="subsidies-section container" data-block-id="block-07-section">
+      <div class="section-header">
+        <span class="section-subtitle">Finansiering &amp; Tilskud</span>
+        <h2 class="section-title">Muligheder for økonomisk støtte</h2>
+        <p style="max-width: 600px;">
+          Klinisk diætbehandling er anerkendt af det offentlige sundhedsvæsen, hvilket giver gode muligheder for tilskud til dine konsultationer.
+        </p>
+      </div>
+
+      <div class="subsidies-grid">
+        <!-- Card 1 -->
+        <div class="subsidy-card">
+          <span class="subsidy-label">Sygeforsikringen "danmark"</span>
+          <h3 class="subsidy-title">Op til 50% refunderet</h3>
+          <p>
+            Er du medlem af Sygeforsikringen "danmark" i gruppe 1, 2 eller 5, kan du modtage væsentligt tilskud til dine konsultationer hos en autoriseret klinisk diætist.
+          </p>
+          <div class="subsidy-points">
+            <div class="subsidy-point">
+              <i class="fa-solid fa-circle-check"></i>
+              <div>
+                <strong>Nem indberetning:</strong> Diætisten indberetter typisk elektronisk direkte til "danmark" efter din konsultation.
+              </div>
+            </div>
+            <div class="subsidy-point">
+              <i class="fa-solid fa-circle-check"></i>
+              <div>
+                <strong>Ingen lægehenvisning påkrævet:</strong> Du kan søge og få tilskud uden forudgående henvisning fra egen læge.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="subsidy-card blue">
+          <span class="subsidy-label">Offentlig Lægehenvisning</span>
+          <h3 class="subsidy-title">Henvisning fra egen læge</h3>
+          <p>
+            Har du en kronisk sygdom såsom type 2-diabetes, svær KOL eller hjerte-kar-sygdom, kan din læge udstede en henvisning til diætbehandling.
+          </p>
+          <div class="subsidy-points">
+            <div class="subsidy-point">
+              <i class="fa-solid fa-circle-check"></i>
+              <div>
+                <strong>Kommunale tilbud:</strong> Mange kommuner tilbyder gratis forløb hos en klinisk diætist via sundhedscentre.
+              </div>
+            </div>
+            <div class="subsidy-point">
+              <i class="fa-solid fa-circle-check"></i>
+              <div>
+                <strong>Sundhedsfaglige kriterier:</strong> Din læge vurderer, om du opfylder kriterierne for en målrettet ernæringsindsats.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONSULTANCY & SPEAKING (FOREDRAG) -->
+    <section id="foredrag" class="foredrag-section" data-block-id="block-08-section">
+      <div class="container foredrag-grid">
+        <div class="foredrag-content">
+          <span class="section-subtitle" style="color: var(--interactive-sand);">B2B &amp; Organisationer</span>
+          <h2 class="hero-title">Foredrag &amp; Virksomhedsaftaler</h2>
+          <p class="hero-description">
+            Skab en sundere arbejdsplads baseret på reel viden frem for myter. Vi tilbyder skræddersyede foredrag, workshops og individuelle sundhedsforløb tilpasset din virksomheds behov.
+          </p>
+          
+          <div class="foredrag-features">
+            <div class="foredrag-feature">
+              <h4 class="foredrag-feature-title"><i class="fa-solid fa-chalkboard-user" style="color: var(--interactive-sand); margin-right: 0.5rem;"></i> Evidensbaserede foredrag</h4>
+              <p style="font-size: 0.9rem; opacity: 0.8;">Aktuelle emner som mave-tarm-sundhed, energi i hverdagen og stressforebyggelse.</p>
+            </div>
+            <div class="foredrag-feature">
+              <h4 class="foredrag-feature-title"><i class="fa-solid fa-briefcase" style="color: var(--interactive-sand); margin-right: 0.5rem;"></i> Sundhedstjek på jobbet</h4>
+              <p style="font-size: 0.9rem; opacity: 0.8;">Individuelle målinger, kropsanalyser og målorienteret sparring på arbejdspladsen.</p>
+            </div>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <a href="#" class="btn btn-secondary" style="border-color: var(--base-canvas); color: var(--base-canvas);">Book uforpligtende samtale</a>
+          </div>
+        </div>
+
+        <div class="foredrag-showcase">
+          <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--interactive-sand);">Tidligere samarbejdspartnere</h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; opacity: 0.9; margin-bottom: 2rem;">
+            Vi samarbejder med både offentlige instanser, kommuner og større private virksomheder om at højne sundheden og trivslen gennem faglig formidling.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; border-top: 1px solid rgba(245, 241, 235, 0.2); padding-top: 1.5rem;">
+            <div>
+              <strong style="display: block; font-size: 1.1rem; color: var(--base-canvas);">100+ afholdte workshops</strong>
+              <span style="font-size: 0.8rem; opacity: 0.7;">Over hele landet i 2023</span>
+            </div>
+            <div>
+              <strong style="display: block; font-size: 1.1rem; color: var(--base-canvas);">98% tilfredshed</strong>
+              <span style="font-size: 0.8rem; opacity: 0.7;">Blandt deltagere og arrangører</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KNOWLEDGE & FAQ SECTION -->
+    <section id="viden" class="knowledge-section container" data-block-id="block-09-section">
+      <div class="knowledge-grid">
+        <!-- Left column: Latest news -->
+        <div class="news-stack">
+          <span class="section-subtitle">Nyeste viden</span>
+          <h2 class="section-title">Evidensbaserede artikler</h2>
+          <p style="margin-bottom: 1.5rem;">Vores diætister skriver løbende om ny forskning, opskrifter og praktiske råd til hverdagen.</p>
+          
+          <!-- Article 1 -->
+          <article class="news-card" data-block-id="block-10-article">
+            <span class="news-meta">April 2024 • Gastrointestinalt</span>
+            <a href="#"><h3 class="news-title">IBS og Low-FODMAP: En guide til at genskabe roen i din mave</h3></a>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Få overblikket over faserne i low-FODMAP diæten, og lær hvordan du genintroducerer fødevarer uden unødigt ubehag.</p>
+          </article>
+
+          <!-- Article 2 -->
+          <article class="news-card" data-block-id="block-11-article">
+            <span class="news-meta">Marts 2024 • Diabetes</span>
+            <a href="#"><h3 class="news-title">Stabiliser dit blodsukker med den rette måltidssammensætning</h3></a>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Hvorfor kulhydrater ikke skal frygtes, men blot kombineres rigtigt med proteiner og sunde fedtkilder.</p>
+          </article>
+        </div>
+
+        <!-- Right column: FAQ Accordion -->
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          <div>
+            <span class="section-subtitle">Ofte stillede spørgsmål</span>
+            <h2 class="section-title" style="margin-bottom: 1rem;">Få svar på dine spørgsmål</h2>
+            <p>Har du spørgsmål til henvisninger, priser eller valg af diætist? Find de hyppigste svar her.</p>
+          </div>
+
+          <div class="faq-container">
+            <div class="faq-item">
+              <button class="faq-trigger">
+                <span>Hvad er forskellen på en diætist og en kostvejleder?</span>
+                <i class="fa-solid fa-plus faq-icon"></i>
+              </button>
+              <div class="faq-content">
+                <p style="font-size: 0.95rem; opacity: 0.9;">
+                  Klinisk diætist er en beskyttet titel, der kræver en 3½-årig statsautoriseret professionsbacheloruddannelse under Sundhedsministeriet. Kostvejledere har typisk kortere, private kurser og må ikke varetage diætbehandling ved sygdom.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                <span>Kan jeg få tilskud fra det offentlige?</span>
+                <i class="fa-solid fa-plus faq-icon"></i>
+              </button>
+              <div class="faq-content">
+                <p style="font-size: 0.95rem; opacity: 0.9;">
+                  Ja, hvis du har en lægehenvisning til f.eks. type 2-diabetes eller KOL, kan du ofte få gratis behandling i din kommunes sundhedscenter eller tilskud til privat behandling.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-trigger">
+                <span>Hvor mange konsultationer skal jeg regne med?</span>
+                <i class="fa-solid fa-plus faq-icon"></i>
+              </button>
+              <div class="faq-content">
+                <p style="font-size: 0.95rem; opacity: 0.9;">
+                  Det varierer efter behov, men de fleste har gavn af et opstartsforløb bestående af en indledende samtale (60 min) og 2-4 opfølgende konsultationer (30-45 min) til justering og opfølgning.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer data-block-id="block-12-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <a href="#" class="logo">
+          <svg class="logo-symbol" viewBox="0 0 24 24">
+            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"></path>
+          </svg>
+          <span>Diætist Danmark</span>
+        </a>
+        <p style="font-size: 0.9rem; opacity: 0.8;">
+          Landsdækkende portal for formidling af autoriseret klinisk diætbehandling til private og erhverv.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-title">Navigation</h4>
+        <div class="footer-links">
+          <a href="#specialiteter" class="footer-link">Særlige fagområder</a>
+          <a href="#find-diaetist" class="footer-link">Søg efter diætist</a>
+          <a href="#tilskud" class="footer-link">Tilskudsmuligheder</a>
+          <a href="#foredrag" class="footer-link">Erhvervsaftaler</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-title">For behandlere</h4>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Bliv en del af portalen</a>
+          <a href="#" class="footer-link">Faglige retningslinjer</a>
+          <a href="#" class="footer-link">Intranet &amp; Log-ind</a>
+          <a href="#" class="footer-link">Vilkår &amp; Betingelser</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-title">Kontakt</h4>
+        <p style="font-size: 0.9rem; opacity: 0.8;">
+          Diætist Danmark AmbA<br>
+          Nørre Voldgade 12, 1.<br>
+          1358 København K<br>
+          CVR: 98765432
+        </p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2024 Diætist Danmark. Alle rettigheder forbeholdes. Autoriserede behandlere kontrolleres via Styrelsen for Patientsikkerhed.</p>
+      <div style="display: flex; gap: 1.5rem;">
+        <a href="#" style="opacity: 0.8;"><i class="fa-brands fa-linkedin fa-lg"></i></a>
+        <a href="#" style="opacity: 0.8;"><i class="fa-brands fa-facebook fa-lg"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for interactivity and smooth springs -->
+```
+
+## CSS
+
+```css
+/* region: app */
+/* CSS RESET & VARIABLES */
+    :root {
+      --base-canvas: #F5F1EB;
+      --text-main: #3D3D3D;
+      --border-line: #644412;
+      --accent-green: #7A9E7E;
+      --interactive-blue: #3393C0;
+      --interactive-sand: #D4B896;
+      --white: #FFFFFF;
+      --border-light: rgba(100, 68, 18, 0.15);
+      
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --transition-organic: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--base-canvas);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3, h4 {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      color: var(--text-main);
+      line-height: 1.15;
+    }
+
+    p {
+      font-weight: 400;
+      color: var(--text-main);
+      opacity: 0.9;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: var(--transition-organic);
+    }
+
+    /* UTILITIES */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .border-top { border-top: 1px solid var(--border-line); }
+    .border-bottom { border-bottom: 1px solid var(--border-line); }
+    .border-left { border-left: 1px solid var(--border-line); }
+    .border-right { border-right: 1px solid var(--border-line); }
+
+    /* BUTTONS & TARGETS (Min 44px for accessibility) */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.85rem 2rem;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid var(--border-line);
+      background: transparent;
+      cursor: pointer;
+      min-height: 48px;
+      transition: var(--transition-organic);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background-color: var(--border-line);
+      color: var(--base-canvas);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--interactive-blue);
+      border-color: var(--interactive-blue);
+      color: var(--white);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--border-line);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--interactive-sand);
+      border-color: var(--border-line);
+    }
+
+    /* FOCUS STATE FOR ACCESSIBILITY */
+    *:focus-visible {
+      outline: 2px solid var(--interactive-blue);
+      outline-offset: 4px;
+    }
+
+    /* HEADER / NAVIGATION */
+    header {
+      background-color: var(--base-canvas);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-line);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      color: var(--border-line);
+    }
+
+    .logo-symbol {
+      width: 24px;
+      height: 24px;
+      fill: var(--border-line);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-main);
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--interactive-blue);
+      transition: var(--transition-organic);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* HERO SECTION (Editorial, asymmetric grid) */
+    .hero-section {
+      padding: 6rem 0;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-sans);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      color: var(--accent-green);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-tagline::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background-color: var(--accent-green);
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      line-height: 1.05;
+      color: var(--border-line);
+    }
+
+    .hero-description {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 600px;
+      opacity: 0.85;
+    }
+
+    /* QUICK FINDER WIDGET */
+    .hero-finder {
+      background: var(--white);
+      border: 1px solid var(--border-line);
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 1rem;
+      box-shadow: 6px 6px 0px var(--interactive-sand);
+      margin-top: 1rem;
+    }
+
+    .finder-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .finder-field label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--border-line);
+      letter-spacing: 0.05em;
+    }
+
+    .finder-field select {
+      border: 1px solid var(--border-light);
+      background: var(--base-canvas);
+      padding: 0.75rem;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      color: var(--text-main);
+      cursor: pointer;
+      outline: none;
+      transition: var(--transition-organic);
+      min-height: 44px;
+    }
+
+    .finder-field select:focus {
+      border-color: var(--interactive-blue);
+    }
+
+    /* HERO IMAGE/METRICS CARD (Asymmetric right column) */
+    .hero-graphic {
+      position: relative;
+      border: 1px solid var(--border-line);
+      background: var(--white);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      box-shadow: 12px 12px 0px var(--border-line);
+    }
+
+    .clinical-seal {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 80px;
+      height: 80px;
+      background: var(--accent-green);
+      border: 1px solid var(--border-line);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-align: center;
+      line-height: 1.2;
+      transform: rotate(12deg);
+      box-shadow: 4px 4px 0px var(--border-line);
+    }
+
+    .metric-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .metric-value {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      color: var(--border-line);
+      line-height: 1;
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* MODULAR SPECIALTIES SECTION */
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-subtitle {
+      font-family: var(--font-sans);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--accent-green);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+      color: var(--border-line);
+    }
+
+    .specialties-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 6rem;
+    }
+
+    .specialty-card {
+      background: var(--white);
+      border: 1px solid var(--border-line);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: var(--transition-organic);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .specialty-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 6px 6px 0px var(--interactive-sand);
+      border-color: var(--interactive-blue);
+    }
+
+    .specialty-icon {
+      width: 44px;
+      height: 44px;
+      stroke: var(--border-line);
+      stroke-width: 1.2;
+      fill: none;
+      transition: var(--transition-organic);
+    }
+
+    .specialty-card:hover .specialty-icon {
+      stroke: var(--interactive-blue);
+    }
+
+    .specialty-title {
+      font-size: 1.2rem;
+      line-height: 1.3;
+      color: var(--border-line);
+    }
+
+    .specialty-desc {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    /* INTERACTIVE FINDER & MAP SECTION */
+    .finder-section {
+      background: var(--white);
+      border-top: 1px solid var(--border-line);
+      border-bottom: 1px solid var(--border-line);
+      padding: 6rem 0;
+    }
+
+    .finder-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* Denmark Map Styles */
+    .map-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .denmark-map {
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+    }
+
+    .map-region {
+      fill: var(--base-canvas);
+      stroke: var(--border-line);
+      stroke-width: 1.5;
+      cursor: pointer;
+      transition: var(--transition-organic);
+    }
+
+    .map-region:hover, .map-region.active {
+      fill: var(--interactive-sand);
+      stroke: var(--interactive-blue);
+      stroke-width: 2.5;
+    }
+
+    /* Region Legend/Buttons */
+    .region-legend {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    .region-btn {
+      padding: 0.75rem;
+      background: var(--base-canvas);
+      border: 1px solid var(--border-line);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-organic);
+      text-align: center;
+    }
+
+    .region-btn:hover, .region-btn.active {
+      background: var(--interactive-blue);
+      color: var(--white);
+      border-color: var(--interactive-blue);
+    }
+
+    /* Dietitian Search/List */
+    .results-container {
+      border: 1px solid var(--border-line);
+      background: var(--base-canvas);
+      padding: 2.5rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .results-header {
+      border-bottom: 1px solid var(--border-line);
+      padding-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .results-title {
+      font-size: 1.5rem;
+      color: var(--border-line);
+    }
+
+    .results-count {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      background: var(--interactive-sand);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+    }
+
+    .dietitian-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    /* Custom Scrollbar */
+    .dietitian-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .dietitian-list::-webkit-scrollbar-track {
+      background: var(--base-canvas);
+    }
+    .dietitian-list::-webkit-scrollbar-thumb {
+      background: var(--border-line);
+      border-radius: 3px;
+    }
+
+    .dietitian-card {
+      background: var(--white);
+      border: 1px solid var(--border-line);
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      transition: var(--transition-organic);
+    }
+
+    .dietitian-card:hover {
+      box-shadow: 4px 4px 0px var(--interactive-sand);
+    }
+
+    .dietitian-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1px solid var(--border-line);
+      object-fit: cover;
+    }
+
+    .dietitian-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .dietitian-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      background: var(--base-canvas);
+      border: 1px solid var(--border-light);
+    }
+
+    .tag-blue {
+      background: rgba(51, 147, 192, 0.1);
+      color: var(--interactive-blue);
+      border-color: rgba(51, 147, 192, 0.2);
+    }
+
+    /* SUBSIDIES (TILSKUD) SECTION */
+    .subsidies-section {
+      padding: 6rem 0;
+    }
+
+    .subsidies-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .subsidy-card {
+      border: 1px solid var(--border-line);
+      background: var(--white);
+      padding: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: relative;
+    }
+
+    .subsidy-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: var(--accent-green);
+    }
+
+    .subsidy-card.blue::after {
+      background: var(--interactive-blue);
+    }
+
+    .subsidy-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-green);
+    }
+
+    .subsidy-card.blue .subsidy-label {
+      color: var(--interactive-blue);
+    }
+
+    .subsidy-title {
+      font-size: 2.2rem;
+      color: var(--border-line);
+    }
+
+    .subsidy-points {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .subsidy-point {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .subsidy-point i {
+      color: var(--accent-green);
+      margin-top: 0.25rem;
+    }
+
+    .subsidy-card.blue .subsidy-point i {
+      color: var(--interactive-blue);
+    }
+
+    /* CONSULTANCY & SPEAKING (FOREDRAG) */
+    .foredrag-section {
+      background: var(--border-line);
+      color: var(--base-canvas);
+      padding: 6rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .foredrag-section h2, .foredrag-section p {
+      color: var(--base-canvas);
+    }
+
+    .foredrag-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .foredrag-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .foredrag-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      border-top: 1px solid rgba(245, 241, 235, 0.2);
+      padding-top: 2rem;
+    }
+
+    .foredrag-feature {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .foredrag-feature-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+    }
+
+    .foredrag-showcase {
+      border: 1px solid rgba(245, 241, 235, 0.3);
+      padding: 3rem;
+      background: rgba(255, 255, 255, 0.03);
+      position: relative;
+    }
+
+    /* KNOWLEDGE & FAQ SECTION */
+    .knowledge-section {
+      padding: 6rem 0;
+      border-top: 1px solid var(--border-line);
+    }
+
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 5rem;
+    }
+
+    .news-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .news-card {
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .news-meta {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    .news-title {
+      font-size: 1.6rem;
+      color: var(--border-line);
+    }
+
+    .news-title:hover {
+      color: var(--interactive-blue);
+    }
+
+    /* Accordion / FAQ */
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq-item {
+      border: 1px solid var(--border-line);
+      background: var(--white);
+    }
+
+    .faq-trigger {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 1.5rem;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--border-line);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-organic);
+    }
+
+    .faq-trigger:hover {
+      background: var(--base-canvas);
+    }
+
+    .faq-icon {
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      padding: 0 1.5rem;
+    }
+
+    .faq-item.active .faq-content {
+      padding-bottom: 1.5rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: var(--base-canvas);
+      border-top: 1px solid var(--border-line);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr);
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .footer-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--border-line);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-link {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .footer-link:hover {
+      opacity: 1;
+      color: var(--interactive-blue);
+      transform: translateX(3px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-light);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 1023px) {
+      .hero-section {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .specialties-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .finder-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .subsidies-grid {
+        grid-template-columns: 1fr;
+      }
+      .foredrag-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .knowledge-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .nav-links {
+        display: none; /* Mobile menu can be added if required, simplified for this scope */
+      }
+      .hero-finder {
+        grid-template-columns: 1fr;
+      }
+      .specialties-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .region-legend {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 479px) {
+      .specialties-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+/* endregion: app */
+```
+
+## JavaScript
+
+```javascript
+// region: app
+document.addEventListener('DOMContentLoaded', () => {
+      // 1. ANIME/GSAP ENTRANCE ANIMATIONS
+      try {
+        gsap.from('.hero-content > *', {
+          opacity: 0,
+          y: 40,
+          stagger: 0.15,
+          duration: 1.2,
+          ease: 'power3.out'
+        });
+
+        gsap.from('.hero-graphic', {
+          opacity: 0,
+          x: 50,
+          duration: 1.2,
+          ease: 'power3.out',
+          delay: 0.3
+        });
+      } catch (e) {
+        console.error('GSAP animation error:', e);
+      }
+
+      // 2. COUNTER ANIMATION FOR METRICS
+      const animateCounter = (id, target) => {
+        let current = 0;
+        const duration = 2000;
+        const stepTime = Math.abs(Math.floor(duration / target));
+        const obj = document.getElementById(id);
+        if (!obj) return;
+        
+        const timer = setInterval(() => {
+          current += Math.ceil(target / 100);
+          if (current >= target) {
+            obj.innerText = target + (id === 'count-members' ? '+' : 'k+');
+            clearInterval(timer);
+          } else {
+            obj.innerText = current + (id === 'count-members' ? '+' : 'k+');
+          }
+        }, stepTime);
+      };
+
+      animateCounter('count-members', 240);
+      animateCounter('count-consultations', 15);
+
+      // 3. INTERACTIVE REGIONAL MAP & SEARCH FILTER
+      const mapRegions = document.querySelectorAll('.map-region');
+      const regionBtns = document.querySelectorAll('.region-btn');
+      const currentRegionText = document.getElementById('current-region-text');
+      const resultsCountBadge = document.getElementById('results-count-badge');
+      const dietitianCards = document.querySelectorAll('.dietitian-card');
+      const specialtySelector = document.getElementById('hero-specialty');
+      const regionSelector = document.getElementById('hero-region');
+      const searchBtn = document.getElementById('hero-search-btn');
+
+      let activeRegion = 'alle';
+      let activeSpecialty = 'alle';
+
+      const updateFilters = () => {
+        let count = 0;
+        dietitianCards.forEach(card => {
+          const cardRegions = card.getAttribute('data-regions').split(' ');
+          const cardSpecs = card.getAttribute('data-specs') ? card.getAttribute('data-specs').split(' ') : [];
+          
+          const regionMatch = (activeRegion === 'alle' || cardRegions.includes(activeRegion));
+          const specialtyMatch = (activeSpecialty === 'alle' || cardSpecs.includes(activeSpecialty));
+
+          if (regionMatch && specialtyMatch) {
+            card.style.display = 'grid';
+            count++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Update badge and text
+        const regionNameMap = {
+          'alle': 'Hele landet',
+          'hovedstaden': 'Hovedstaden',
+          'sjaelland': 'Sjælland',
+          'syddanmark': 'Syddanmark',
+          'midtjylland': 'Midtjylland',
+          'nordjylland': 'Nordjylland'
+        };
+        currentRegionText.innerText = regionNameMap[activeRegion] || activeRegion;
+        resultsCountBadge.innerText = `${count} fundet`;
+      };
+
+      // Map Paths Click Event
+      mapRegions.forEach(region => {
+        region.addEventListener('click', () => {
+          mapRegions.forEach(r => r.classList.remove('active'));
+          region.classList.add('active');
+          activeRegion = region.getAttribute('data-region');
+          
+          // Sync region buttons
+          regionBtns.forEach(btn => {
+            if(btn.getAttribute('data-region') === activeRegion) {
+              btn.classList.add('active');
+            } else {
+              btn.classList.remove('active');
+            }
+          });
+
+          updateFilters();
+        });
+      });
+
+      // Region Legend Buttons Click Event
+      regionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          regionBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeRegion = btn.getAttribute('data-region');
+
+          // Sync SVG Map
+          mapRegions.forEach(r => {
+            if(r.getAttribute('data-region') === activeRegion) {
+              r.classList.add('active');
+            } else {
+              r.classList.remove('active');
+            }
+          });
+
+          updateFilters();
+        });
+      });
+
+      // Modular Specialties quick-click filtering
+      const specialtyCards = document.querySelectorAll('.specialty-card');
+      specialtyCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const spec = card.getAttribute('data-specialty');
+          if (spec) {
+            activeSpecialty = spec;
+            specialtySelector.value = spec;
+            updateFilters();
+            // Scroll to finder section
+            document.getElementById('find-diaetist').scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // Hero Widget Search
+      if (searchBtn) {
+        searchBtn.addEventListener('click', () => {
+          activeRegion = regionSelector.value;
+          activeSpecialty = specialtySelector.value;
+
+          // Sync Region Buttons & Map
+          regionBtns.forEach(b => {
+            if(b.getAttribute('data-region') === activeRegion) b.classList.add('active');
+            else b.classList.remove('active');
+          });
+          mapRegions.forEach(r => {
+            if(r.getAttribute('data-region') === activeRegion) r.classList.add('active');
+            else r.classList.remove('active');
+          });
+
+          updateFilters();
+          document.getElementById('find-diaetist').scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+
+      // 4. ACCORDION (FAQ) FUNCTIONALITY
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const trigger = item.querySelector('.faq-trigger');
+        const content = item.querySelector('.faq-content');
+
+        trigger.addEventListener('click', () => {
+          const isOpen = item.classList.contains('active');
+          
+          // Close all FAQ items
+          faqItems.forEach(i => {
+            i.classList.remove('active');
+            i.querySelector('.faq-content').style.maxHeight = '0';
+          });
+
+          if (!isOpen) {
+            item.classList.add('active');
+            content.style.maxHeight = content.scrollHeight + 'px';
+          }
+        });
+      });
+
+    });
+// endregion: app
+```
